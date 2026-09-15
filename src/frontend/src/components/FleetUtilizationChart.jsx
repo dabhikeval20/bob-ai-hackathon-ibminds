@@ -1,0 +1,4 @@
+export default function FleetUtilizationChart({ vehicles = [] }) {
+  if (!vehicles.length) return <div className="state-panel">No vehicle utilization data available.</div>;
+  return <div className="space-y-4" aria-label="Fleet utilization chart">{vehicles.slice(0, 10).map((vehicle) => <div key={vehicle.vehicleId}><div className="mb-1 flex items-center justify-between text-xs"><span className="font-medium text-slate-300">{vehicle.vehicleId}</span><span className={vehicle.utilizationPercent >= 90 ? 'text-amber-300' : 'text-slate-400'}>{vehicle.utilizationPercent}%</span></div><div className="utilization-track"><div className={`utilization-value ${vehicle.utilizationPercent >= 90 ? 'is-high' : ''}`} style={{ width: `${vehicle.utilizationPercent}%` }} /></div><p className="mt-1 text-[11px] text-slate-500">{vehicle.region} · {vehicle.vehicleType.replaceAll('_', ' ')}</p></div>)}</div>;
+}

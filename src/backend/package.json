@@ -1,0 +1,29 @@
+{
+  "name": "supplyguard-backend",
+  "private": true,
+  "version": "0.1.0",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "check": "node -e \"require('./src/app'); console.log('backend app loaded')\"",
+    "seed:synthetic": "node src/scripts/seedSyntheticData.js",
+    "test:risk": "node --test test/riskEngine.test.js test/riskAnalysis.test.js",
+    "test:fleet": "node --test test/fleetIntelligence.test.js",
+    "test:cold-chain": "node --test test/coldChain.test.js",
+    "test:ai-contract": "node --test test/runtimeAIContract.test.js test/aiContextPrompts.test.js",
+    "test:assistant": "node --test test/assistantService.test.js",
+    "test:mcp": "node --test test/mcpTools.test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.1.0",
+    "mongoose": "^8.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

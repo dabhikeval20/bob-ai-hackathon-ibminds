@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+!.env.example
+dist/
+coverage/
+logs/
+*.log
+
+# Legacy copies retained locally while the editor releases its directory locks.
+/backend/
+/frontend/

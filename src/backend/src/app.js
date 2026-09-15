@@ -1,0 +1,35 @@
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const env = require('./config/env');
+const healthRoutes = require('./routes/healthRoutes');
+const shipmentRoutes = require('./routes/shipmentRoutes');
+const disruptionRoutes = require('./routes/disruptionRoutes');
+const fleetRoutes = require('./routes/fleetRoutes');
+const sensorRoutes = require('./routes/sensorRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
+const riskRoutes = require('./routes/riskRoutes');
+const coldChainRoutes = require('./routes/coldChainRoutes');
+const assistantRoutes = require('./routes/assistantRoutes');
+const { notFound, errorHandler } = require('./middleware/errorHandler');
+const { requireApiKey, apiRateLimit, assistantRateLimit } = require('./middleware/security');
+
+const app = express();
+app.use(helmet());
+const allowedOrigins = new Set([env.frontendUrl, 'http://localhost:5173', 'http://127.0.0.1:5173']);
+app.use(cors({ origin: (origin, callback) => callback(null, !origin || allowedOrigins.has(origin)) }));
+app.use(express.json({ limit: '100kb' }));
+app.use('/api/health', healthRoutes);
+app.use('/api', requireApiKey, apiRateLimit);
+app.use('/api/shipments', shipmentRoutes);
+app.use('/api/disruptions', disruptionRoutes);
+app.use('/api/fleet', fleetRoutes);
+app.use('/api/sensors', sensorRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/risk', riskRoutes);
+app.use('/api/cold-chain', coldChainRoutes);
+app.use('/api/assistant', assistantRateLimit, assistantRoutes);
+app.use(notFound);
+app.use(errorHandler);
+
+module.exports = app;
